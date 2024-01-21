@@ -1,0 +1,14 @@
+.options {
+    padding: 40px 0;
+}
+
+button {
+    font-size: medium;
+    padding: 8px 16px;
+    border: 1px solid black;
+    border-radius: 4px;
+}
+
+button:not(:last-of-type) {
+    margin-right: 10px;
+}
