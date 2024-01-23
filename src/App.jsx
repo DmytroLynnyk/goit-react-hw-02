@@ -1,60 +1,99 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./App.css";
 // import { Options } from './components/options/options';
 // import { Feedback } from './components/feedback/feedback';
 
-const Button = ({ onUpdate, value, children }) => {
-  return (
-    <button onClick={onUpdate}>
-      {children} - {value}
-    </button>
-  );
+const Button = ({ onUpdate, children }) => {
+  return <button onClick={onUpdate}>{children}</button>;
 };
 
-const Clicker = ({ value, onUpdate }) => {
+const Options = ({
+  value: { good, neutral, bad },
+  goodUpdate,
+  neutralUpdate,
+  badUpdate,
+}) => {
   return (
     <div>
-      <Button value={value} onUpdate={onUpdate}>
-        Good
+      <Button value={good} onUpdate={goodUpdate}>
+        good
       </Button>
-      <Button value={value} onUpdate={onUpdate}>
-        Neutral
+      <Button value={neutral} onUpdate={neutralUpdate}>
+        neutral
       </Button>
-      <Button value={value} onUpdate={onUpdate}>
-        Bad
+      <Button value={bad} onUpdate={badUpdate}>
+        bad
       </Button>
     </div>
   );
 };
 
 export const App = () => {
-  const [feedbackState, setFeedbackState] = useState({
-    good: 0,
-    neutral: 0,
-    bad: 0,
+  const [feedbackState, setFeedbackState] = useState(() => {
+    const sevedFeedbacks = window.localStorage.getItem("feedbacks-state");
+    if (JSON.parse(sevedFeedbacks) !== null) {
+      return JSON.parse(sevedFeedbacks);
+    }
+    return {
+      good: 0,
+      neutral: 0,
+      bad: 0,
+    };
   });
+
   const goodFeedback = () => {
     setFeedbackState({
       ...feedbackState,
-      good: good.value + 1,
+      good: feedbackState.good + 1,
     });
   };
   const neutralFeedback = () => {
     setFeedbackState({
       ...feedbackState,
-      neutral: neutral.value + 1,
+      neutral: feedbackState.neutral + 1,
     });
   };
   const badFeedback = () => {
     setFeedbackState({
       ...feedbackState,
-      bad: bad.value + 1,
+      bad: feedbackState.bad + 1,
     });
   };
 
-  const [count, setCount] = useState(0);
-  const habdleClick = () => {
-    setCount(count + 1);
+  useEffect(() => {
+    window.localStorage.setItem(
+      "feedbacks-state",
+      JSON.stringify(feedbackState)
+    );
+  });
+
+  const FeedbackStatus = () => {
+    const totalFeedbacks =
+      feedbackState.good + feedbackState.neutral + feedbackState.bad;
+    const positiveFeedback = Math.round(
+      ((feedbackState.good + feedbackState.neutral) / totalFeedbacks) * 100
+    );
+    return (
+      <>
+        good - {feedbackState.good}
+        <br></br>
+        neutral - {feedbackState.neutral}
+        <br></br>
+        bad - {feedbackState.bad}
+        <br></br>
+        total - {totalFeedbacks}
+        <br></br>
+        positive - {positiveFeedback}%<br></br>
+      </>
+    );
+  };
+
+  const Feedback = (value) => {
+    return (
+      <div>
+        <FeedbackStatus value={value}>good</FeedbackStatus>
+      </div>
+    );
   };
 
   return (
@@ -64,7 +103,13 @@ export const App = () => {
         Please leave your feedback about our service by selecting one of the
         options below.
       </p>
-      <Clicker value={count} onUpdate={habdleClick} />
+      <Options
+        value={feedbackState}
+        goodUpdate={goodFeedback}
+        neutralUpdate={neutralFeedback}
+        badUpdate={badFeedback}
+      />
+      <Feedback value={feedbackState} />
     </>
   );
 };
