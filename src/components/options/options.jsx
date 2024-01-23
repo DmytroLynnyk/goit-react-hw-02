@@ -1,12 +1,26 @@
-import css from './options.module.css'
+import css from "./options.module.css";
 
-export const Options = () => {
-    return (
-        <div className={css.options}>
-            <button>Good</button>
-            <button>Neutral</button>
-            <button>Bad</button>
-            <button>Resset</button>
-        </div>
-    );
-}
+export const Options = ({
+  value: { good, neutral, bad },
+  goodUpdate,
+  neutralUpdate,
+  badUpdate,
+}) => {
+  return (
+    <div>
+      <Button value={good} onUpdate={goodUpdate}>
+        good
+      </Button>
+      <Button value={neutral} onUpdate={neutralUpdate}>
+        neutral
+      </Button>
+      <Button value={bad} onUpdate={badUpdate}>
+        bad
+      </Button>
+    </div>
+  );
+};
+
+const Button = ({ onUpdate, children }) => {
+  return <button onClick={onUpdate}>{children}</button>;
+};

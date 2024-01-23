@@ -1,45 +1,47 @@
 import { useState, useEffect } from "react";
 import "./App.css";
-// import { Options } from './components/options/options';
+import { Options } from "./components/options/options";
 // import { Feedback } from './components/feedback/feedback';
 
-const Button = ({ onUpdate, children }) => {
-  return <button onClick={onUpdate}>{children}</button>;
-};
+// const Button = ({ onUpdate, children }) => {
+//   return <button onClick={onUpdate}>{children}</button>;
+// };
 
-const Options = ({
-  value: { good, neutral, bad },
-  goodUpdate,
-  neutralUpdate,
-  badUpdate,
-}) => {
-  return (
-    <div>
-      <Button value={good} onUpdate={goodUpdate}>
-        good
-      </Button>
-      <Button value={neutral} onUpdate={neutralUpdate}>
-        neutral
-      </Button>
-      <Button value={bad} onUpdate={badUpdate}>
-        bad
-      </Button>
-    </div>
-  );
+// const Options = ({
+//   value: { good, neutral, bad },
+//   goodUpdate,
+//   neutralUpdate,
+//   badUpdate,
+// }) => {
+//   return (
+//     <div>
+//       <Button value={good} onUpdate={goodUpdate}>
+//         good
+//       </Button>
+//       <Button value={neutral} onUpdate={neutralUpdate}>
+//         neutral
+//       </Button>
+//       <Button value={bad} onUpdate={badUpdate}>
+//         bad
+//       </Button>
+//     </div>
+//   );
+// };
+
+const getSavedFeedback = () => {
+  const sevedFeedbacks = window.localStorage.getItem("feedbacks-state");
+  if (JSON.parse(sevedFeedbacks) !== null) {
+    return JSON.parse(sevedFeedbacks);
+  }
+  return {
+    good: 0,
+    neutral: 0,
+    bad: 0,
+  };
 };
 
 export const App = () => {
-  const [feedbackState, setFeedbackState] = useState(() => {
-    const sevedFeedbacks = window.localStorage.getItem("feedbacks-state");
-    if (JSON.parse(sevedFeedbacks) !== null) {
-      return JSON.parse(sevedFeedbacks);
-    }
-    return {
-      good: 0,
-      neutral: 0,
-      bad: 0,
-    };
-  });
+  const [feedbackState, setFeedbackState] = useState(getSavedFeedback);
 
   const goodFeedback = () => {
     setFeedbackState({
@@ -88,10 +90,10 @@ export const App = () => {
     );
   };
 
-  const Feedback = (value) => {
+  const Feedback = () => {
     return (
       <div>
-        <FeedbackStatus value={value}>good</FeedbackStatus>
+        <FeedbackStatus />
       </div>
     );
   };
@@ -109,7 +111,7 @@ export const App = () => {
         neutralUpdate={neutralFeedback}
         badUpdate={badFeedback}
       />
-      <Feedback value={feedbackState} />
+      <Feedback />
     </>
   );
 };
