@@ -3,33 +3,6 @@ import "./App.css";
 import { Options } from "./components/options/options";
 import { Feedback } from "./components/feedback/feedback";
 
-// const Button = ({ onUpdate, children }) => {
-//   return <button onClick={onUpdate}>{children}</button>;
-// };
-
-// const Options = ({
-//   value: { good, neutral, bad },
-//   goodUpdate,
-//   neutralUpdate,
-//   badUpdate,
-// }) => {
-//   return (
-//     <div>
-//       <Button value={good} onUpdate={goodUpdate}>
-//         good
-//       </Button>
-//       <Button value={neutral} onUpdate={neutralUpdate}>
-//         neutral
-//       </Button>
-//       <Button value={bad} onUpdate={badUpdate}>
-//         bad
-//       </Button>
-//     </div>
-//   );
-// };
-
-// const sevedFeedbacks = window.localStorage.getItem("feedbacks-state");
-
 const getSavedFeedback = () => {
   const sevedFeedbacks = window.localStorage.getItem("feedbacks-state");
   if (JSON.parse(sevedFeedbacks) !== null) {
@@ -80,8 +53,8 @@ export const App = () => {
 
   return (
     <>
-      <h1>Sip Happens Café</h1>
-      <p>
+      <h1 className="title">Sip Happens Café</h1>
+      <p className="description">
         Please leave your feedback about our service by selecting one of the
         options below.
       </p>

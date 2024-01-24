@@ -1,0 +1,7 @@
+.feedbackList {
+  text-transform: capitalize;
+}
+
+.feedbackList :not(:last-child) {
+  margin-bottom: 8px;
+}

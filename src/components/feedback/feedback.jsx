@@ -7,17 +7,13 @@ export const Feedback = ({ feedbackState: { good, neutral, bad } }) => {
   );
   if (totalFeedbacks !== 0) {
     return (
-      <>
-        good - {good}
-        <br></br>
-        neutral - {neutral}
-        <br></br>
-        bad - {bad}
-        <br></br>
-        total - {totalFeedbacks}
-        <br></br>
-        positive - {positiveFeedback}%<br></br>
-      </>
+      <ul className={css.feedbackList}>
+        <li>good - {good}</li>
+        <li>neutral - {neutral}</li>
+        <li>bad - {bad}</li>
+        <li>total - {totalFeedbacks}</li>
+        <li>positive - {positiveFeedback}%</li>
+      </ul>
     );
   }
   return "No feedback yet";

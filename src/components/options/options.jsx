@@ -8,7 +8,7 @@ export const Options = ({
   resetUpdate,
 }) => {
   return (
-    <div>
+    <div className={css.options}>
       <Button value={good} onUpdate={goodUpdate}>
         good
       </Button>
