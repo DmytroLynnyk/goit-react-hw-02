@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import "./App.css";
 import { Options } from "./components/options/options";
-// import { Feedback } from './components/feedback/feedback';
+import { Feedback } from "./components/feedback/feedback";
 
 // const Button = ({ onUpdate, children }) => {
 //   return <button onClick={onUpdate}>{children}</button>;
@@ -27,6 +27,8 @@ import { Options } from "./components/options/options";
 //     </div>
 //   );
 // };
+
+// const sevedFeedbacks = window.localStorage.getItem("feedbacks-state");
 
 const getSavedFeedback = () => {
   const sevedFeedbacks = window.localStorage.getItem("feedbacks-state");
@@ -61,6 +63,13 @@ export const App = () => {
       bad: feedbackState.bad + 1,
     });
   };
+  const resetFeedback = () => {
+    setFeedbackState({
+      good: 0,
+      neutral: 0,
+      bad: 0,
+    });
+  };
 
   useEffect(() => {
     window.localStorage.setItem(
@@ -68,35 +77,6 @@ export const App = () => {
       JSON.stringify(feedbackState)
     );
   });
-
-  const FeedbackStatus = () => {
-    const totalFeedbacks =
-      feedbackState.good + feedbackState.neutral + feedbackState.bad;
-    const positiveFeedback = Math.round(
-      ((feedbackState.good + feedbackState.neutral) / totalFeedbacks) * 100
-    );
-    return (
-      <>
-        good - {feedbackState.good}
-        <br></br>
-        neutral - {feedbackState.neutral}
-        <br></br>
-        bad - {feedbackState.bad}
-        <br></br>
-        total - {totalFeedbacks}
-        <br></br>
-        positive - {positiveFeedback}%<br></br>
-      </>
-    );
-  };
-
-  const Feedback = () => {
-    return (
-      <div>
-        <FeedbackStatus />
-      </div>
-    );
-  };
 
   return (
     <>
@@ -110,8 +90,9 @@ export const App = () => {
         goodUpdate={goodFeedback}
         neutralUpdate={neutralFeedback}
         badUpdate={badFeedback}
+        resetUpdate={resetFeedback}
       />
-      <Feedback />
+      <Feedback feedbackState={feedbackState} />
     </>
   );
 };

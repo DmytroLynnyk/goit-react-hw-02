@@ -5,6 +5,7 @@ export const Options = ({
   goodUpdate,
   neutralUpdate,
   badUpdate,
+  resetUpdate,
 }) => {
   return (
     <div>
@@ -17,6 +18,7 @@ export const Options = ({
       <Button value={bad} onUpdate={badUpdate}>
         bad
       </Button>
+      <Button onUpdate={resetUpdate}>reset</Button>
     </div>
   );
 };
