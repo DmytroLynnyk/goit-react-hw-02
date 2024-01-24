@@ -18,11 +18,19 @@ export const Options = ({
       <Button value={bad} onUpdate={badUpdate}>
         bad
       </Button>
-      <Button onUpdate={resetUpdate}>reset</Button>
+      <ResetButton value={good + neutral + bad} onUpdate={resetUpdate}>
+        reset
+      </ResetButton>
     </div>
   );
 };
 
 const Button = ({ onUpdate, children }) => {
   return <button onClick={onUpdate}>{children}</button>;
+};
+
+const ResetButton = ({ value, onUpdate, children }) => {
+  if (value > 0) {
+    return <button onClick={onUpdate}>{children}</button>;
+  }
 };
