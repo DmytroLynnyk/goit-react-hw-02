@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import "./App.css";
 import { Options } from "./components/options/options";
 import { Feedback } from "./components/feedback/feedback";
+import { Description } from "./components/description/description";
 
 const getSavedFeedback = () => {
   const sevedFeedbacks = window.localStorage.getItem("feedbacks-state");
@@ -53,11 +54,7 @@ export const App = () => {
 
   return (
     <>
-      <h1 className="title">Sip Happens Café</h1>
-      <p className="description">
-        Please leave your feedback about our service by selecting one of the
-        options below.
-      </p>
+      <Description />
       <Options
         value={feedbackState}
         goodUpdate={goodFeedback}
